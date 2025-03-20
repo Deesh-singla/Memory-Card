@@ -1,0 +1,75 @@
+ /* Root */
+ #root {
+     height: 100%;
+     width: 100%;
+ }
+
+ /* App */
+ .App {
+     height: 100%;
+     width: 100%;
+ }
+
+ /* header */
+ #header {
+     display: flex;
+     align-items: center;
+     flex-direction: column;
+     position: relative;
+     height: 30%;
+ }
+
+ .appHeading {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 10px;
+ }
+
+ .appHeading p {
+     font-size: 25px;
+ }
+
+ /* .stats {
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     opacity: 0.7;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     background: rgba(0, 0, 0, 0.3);
+     padding: 5px 10px;
+     border-radius: 5px;
+ } */
+
+ .stats{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    gap:20px;
+  }
+
+ /* Cards */
+ #cards {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-wrap: wrap;
+     gap: 20px;
+ }
+
+ #card {
+     color: white;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
+     background-color: rgba(0, 0, 0, 0.3);
+     height: 250px;
+     width: 180px;
+     border-radius: 5px;
+     cursor: pointer;
+ }
