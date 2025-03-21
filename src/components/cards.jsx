@@ -1,51 +1,80 @@
 import { useEffect, useState } from "react"
 
-export default function Cards() {
-    const [pokemons, setPokemons] = useState([]);
+export default function Cards({ pokemons, setPokemons, setScore }) {
+    const [countClicks, setCountClicks] = useState({});
+    const [images, setImages] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [failed, setFailed] = useState(false);
+    const [win, setWin] = useState(false);
+
+    function checkFailed(name) {
+        if (countClicks[name] == 0) {
+            setFailed(true);
+        }
+    }
+    function shuffleArr() {
+        setPokemons(prev => [...prev.sort(() => Math.random() - 0.5)]);
+    }
+    function checkWinner() {
+        let _flag = 0;
+        if (Object.keys(countClicks).length == pokemons.length - 1) {
+            for (let key in countClicks) {
+                if (countClicks[key] == 0) _flag = 1;
+                else {
+                    _flag = 0;
+                    break;
+                }
+            }
+            if (_flag == 1) setWin(true);
+            else setWin(false);
+        }
+    }
+    function handleCount(name) {
+        if (win || failed) setScore();
+        else setScore(Object.keys(countClicks).length + 1);
+        let val;
+        if (Object.prototype.hasOwnProperty.call(countClicks, name)) {
+            val = countClicks[name];
+            val++;
+        }
+        else val = 0
+        setCountClicks({ ...countClicks, [name]: val })
+        checkFailed(name);
+        checkWinner();
+        shuffleArr();
+    }
     useEffect(() => {
-        const fetchPokemons = async () => {
+        setLoading(true);
+        const fetchImages = async () => {
             try {
-                let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=5&offset=0')
-                let data = await response.json();
-                setPokemons(data.results);
+                let promises = pokemons.map(async (pokemon) => {
+                    let response = await fetch(pokemon.url);
+                    let data = await response.json();
+                    return data.sprites.front_default;
+                })
+                const imgUrls = await Promise.all(promises);
+                setImages(imgUrls);
+                setLoading(false);
             }
             catch (error) {
-                console.log(error)
+                console.log(error);
             }
         }
-        fetchPokemons();
-    }, [])
+        fetchImages();
+    }, [pokemons])
     return (
         <div id="cards">
-            {pokemons.length > 0 &&
-                pokemons.map((pokemon, index) => (
-                    <Card name={pokemon.name} url={pokemon.url} key={index} />
-                ))
-            }
+            {loading ? <h1>Loading...</h1> : pokemons.map((pokemon, index) => <Card name={pokemon.name} url={images[index]} key={index} handleCount={handleCount} />)}
+            {failed && <h1>failed</h1>}
+            {win && <h1>win</h1>}
         </div>
     )
 }
-function Card({ name, url }) {
-    const [src, setSrc] = useState('');
-
-    useEffect(() => {
-        const getImg = async () => {
-            try {
-                let response = await fetch(url);
-                let data = await response.json();
-                setSrc(data.sprites.front_default)
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-        getImg();
-    }, [url])
-
+function Card({ name, url, handleCount }) {
     return (
-        <div id="card">
-            {src && <img src={src} alt="" />}
-            <h4>{name}</h4>
+        <div className="card cardFront" onClick={() => handleCount(name)}>
+            {url && <img src={url} alt="" />}
+            <h5>{name}</h5>
         </div>
     )
 }

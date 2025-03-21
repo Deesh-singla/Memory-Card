@@ -16,7 +16,7 @@
      align-items: center;
      flex-direction: column;
      position: relative;
-     height: 30%;
+     height: 25%;
  }
 
  .appHeading {
@@ -44,13 +44,19 @@
      border-radius: 5px;
  } */
 
- .stats{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.7;
-    gap:20px;
-  }
+ .stats {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     opacity: 0.7;
+     gap: 20px;
+ }
+
+ /* scoreCard */
+ .scoreCard {
+     text-align: center;
+     margin-bottom: 20px;
+ }
 
  /* Cards */
  #cards {
@@ -61,7 +67,11 @@
      gap: 20px;
  }
 
- #card {
+ .card h5 {
+     text-align: center;
+ }
+
+ .cardFront {
      color: white;
      display: flex;
      justify-content: center;
@@ -72,4 +82,9 @@
      width: 180px;
      border-radius: 5px;
      cursor: pointer;
+ }
+
+ .cardFront img {
+     height: 200px;
+     width: 180px;
  }

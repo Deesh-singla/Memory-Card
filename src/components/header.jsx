@@ -1,4 +1,4 @@
-export default function Header() {
+export default function Header({score}) {
     return (
         <div id="header">
             <div className="appHeading">
@@ -7,7 +7,7 @@ export default function Header() {
             </div>
             <div className="stats">
                 <div className="score">
-                    <p><span>SCORE:</span> <span>0</span></p>
+                    <p><span>SCORE:</span> <span>{score}</span></p>
                 </div>
                 <div className="highScore">
                     <p><span>HIGH-SCORE:</span> <span>0</span></p>
