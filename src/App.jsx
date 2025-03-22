@@ -15,7 +15,7 @@ export default function App() {
                     let j = Math.floor(Math.random() * (i + 1));
                     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                 }
-                setPokemons(shuffled.slice(0, 5));
+                setPokemons(shuffled.slice(0, 12));
             }
             catch (error) {
                 console.log(error)
@@ -27,7 +27,7 @@ export default function App() {
         <div className="App">
             <Header score={score} />
             <div className="scoreCard"><span>{score}</span>/<span>{pokemons.length}</span></div>
-            {pokemons.length > 0 ? <Cards pokemons={pokemons} setPokemons={setPokemons} setScore={setScore} /> : <h1 style={{ textAlign: "center" }}>loading ....</h1>}
+            {pokemons.length > 0 ? <Cards pokemons={pokemons} setPokemons={setPokemons} setScore={setScore} score={score} /> : <h1 style={{ textAlign: "center" }}>loading ....</h1>}
         </div>
     )
 }

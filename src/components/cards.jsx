@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
+import Result from "./result";
 
-export default function Cards({ pokemons, setPokemons, setScore }) {
+export default function Cards({ pokemons, setPokemons, setScore, score }) {
     const [countClicks, setCountClicks] = useState({});
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(true);
-    const [failed, setFailed] = useState(false);
-    const [win, setWin] = useState(false);
+    const [result, setResult] = useState(null);
 
     function checkFailed(name) {
         if (countClicks[name] == 0) {
-            setFailed(true);
+            setResult('Game Over!');
+            setScore(prev => prev - 1);
         }
     }
     function shuffleArr() {
@@ -25,12 +26,11 @@ export default function Cards({ pokemons, setPokemons, setScore }) {
                     break;
                 }
             }
-            if (_flag == 1) setWin(true);
-            else setWin(false);
+            if (_flag == 1) setResult('You Win!');
         }
     }
     function handleCount(name) {
-        if (win || failed) setScore();
+        if (result == 'win' || result == 'fail') setScore(0);
         else setScore(Object.keys(countClicks).length + 1);
         let val;
         if (Object.prototype.hasOwnProperty.call(countClicks, name)) {
@@ -63,11 +63,12 @@ export default function Cards({ pokemons, setPokemons, setScore }) {
         fetchImages();
     }, [pokemons])
     return (
-        <div id="cards">
-            {loading ? <h1>Loading...</h1> : pokemons.map((pokemon, index) => <Card name={pokemon.name} url={images[index]} key={index} handleCount={handleCount} />)}
-            {failed && <h1>failed</h1>}
-            {win && <h1>win</h1>}
-        </div>
+        <>
+            <div id="cards">
+                {loading ? <h1>Loading...</h1> : pokemons.map((pokemon, index) => <Card name={pokemon.name} url={images[index]} key={index} handleCount={handleCount} />)}
+            </div>
+            {result != null && <Result result={result} score={score} />}
+        </>
     )
 }
 function Card({ name, url, handleCount }) {
