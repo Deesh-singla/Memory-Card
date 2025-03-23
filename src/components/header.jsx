@@ -1,3 +1,4 @@
+import pokeball from "/pokeball.png"
 export default function Header({ score }) {
     let hScore = localStorage.getItem('hScore');
 
@@ -14,7 +15,7 @@ export default function Header({ score }) {
     return (
         <div id="header">
             <div className="appHeading">
-                <img src=".\src\assests\pokeball.png" alt="pokeball" />
+                <img src={pokeball} alt="pokeball" />
                 <p><span style={{ color: "red" }}>Poke</span><span style={{ color: "white" }}>Memo</span></p>
             </div>
             <div className="stats">
