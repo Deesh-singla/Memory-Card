@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Result from "./result";
 
-export default function Cards({ pokemons, setPokemons, setScore, score }) {
+export default function Cards({ pokemons, setPokemons, setScore, score, resetState }) {
     const [countClicks, setCountClicks] = useState({});
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState(true);
@@ -67,7 +67,7 @@ export default function Cards({ pokemons, setPokemons, setScore, score }) {
             <div id="cards">
                 {loading ? <h1>Loading...</h1> : pokemons.map((pokemon, index) => <Card name={pokemon.name} url={images[index]} key={index} handleCount={handleCount} />)}
             </div>
-            {result != null && <Result result={result} score={score} />}
+            {result != null && <Result result={result} score={score} resetState={resetState} />}
         </>
     )
 }

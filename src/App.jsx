@@ -4,6 +4,12 @@ import Cards from "./components/cards"
 export default function App() {
     const [pokemons, setPokemons] = useState([]);
     const [score, setScore] = useState(0);
+    const [flag, setFlag] = useState(false);
+    function resetState() {
+        setPokemons([]);
+        setScore(0);
+        setFlag(prev => !prev)
+    }
 
     useEffect(() => {
         const fetchPokemons = async () => {
@@ -22,12 +28,12 @@ export default function App() {
             }
         }
         fetchPokemons();
-    }, [])
+    }, [flag])
     return (
         <div className="App">
             <Header score={score} />
             <div className="scoreCard"><span>{score}</span>/<span>{pokemons.length}</span></div>
-            {pokemons.length > 0 ? <Cards pokemons={pokemons} setPokemons={setPokemons} setScore={setScore} score={score} /> : <h1 style={{ textAlign: "center" }}>loading ....</h1>}
+            {pokemons.length > 0 ? <Cards pokemons={pokemons} setPokemons={setPokemons} setScore={setScore} score={score} resetState={resetState} /> : <h1 style={{ textAlign: "center" }}>loading ....</h1>}
         </div>
     )
 }
